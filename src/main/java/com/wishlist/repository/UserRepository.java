@@ -1,6 +1,6 @@
-package com.wardrobe.repository;
+package com.wishlist.repository;
 
-import com.wardrobe.model.User;
+import com.wishlist.model.User;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;

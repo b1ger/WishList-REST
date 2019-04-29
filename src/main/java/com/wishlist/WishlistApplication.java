@@ -1,13 +1,13 @@
-package com.wardrobe;
+package com.wishlist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WardrobeApplication {
+public class WishlistApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WardrobeApplication.class, args);
+		SpringApplication.run(WishlistApplication.class, args);
 	}
 
 }

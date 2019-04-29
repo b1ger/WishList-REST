@@ -1,6 +1,6 @@
-package com.wardrobe.repository;
+package com.wishlist.repository;
 
-import com.wardrobe.model.Authority;
+import com.wishlist.model.Authority;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

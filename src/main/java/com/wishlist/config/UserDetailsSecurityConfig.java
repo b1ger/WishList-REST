@@ -1,7 +1,7 @@
-package com.wardrobe.config;
+package com.wishlist.config;
 
-import com.wardrobe.repository.UserRepository;
-import com.wardrobe.service.security.DomainUserDetailService;
+import com.wishlist.repository.UserRepository;
+import com.wishlist.service.security.DomainUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

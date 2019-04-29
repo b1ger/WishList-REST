@@ -1,4 +1,4 @@
-package com.wardrobe.config;
+package com.wishlist.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

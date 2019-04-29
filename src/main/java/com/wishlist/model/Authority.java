@@ -1,4 +1,4 @@
-package com.wardrobe.model;
+package com.wishlist.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

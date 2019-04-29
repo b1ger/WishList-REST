@@ -1,4 +1,4 @@
-package com.wardrobe.exception;
+package com.wishlist.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

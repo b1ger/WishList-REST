@@ -1,4 +1,4 @@
-package com.wardrobe.model;
+package com.wishlist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

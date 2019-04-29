@@ -1,4 +1,4 @@
-package com.wardrobe.config.constants;
+package com.wishlist.config.constants;
 
 public class AuthoritiesConstants {
 
