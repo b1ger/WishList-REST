@@ -8,10 +8,10 @@
 		<version>2.1.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.wardrobe</groupId>
-	<artifactId>wardrobe</artifactId>
+	<groupId>com.wishlist</groupId>
+	<artifactId>wishlist</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>wardrobe</name>
+	<name>wishlist</name>
 	<description>Spring Boot App</description>
 
 	<properties>
