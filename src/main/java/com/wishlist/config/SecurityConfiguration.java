@@ -29,13 +29,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .userDetailsService(userDetailsService)
                 .authorizeRequests()
-                .antMatchers("admin/**").hasRole("ADMIN")
+                .antMatchers("/index", "/rest/**").permitAll()
+                .antMatchers("/admin/**").permitAll()//.hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .usernameParameter("username")
+                .usernameParameter("email")
                 .defaultSuccessUrl("/admin/index")
                 .loginPage("/login")
                 .permitAll()
