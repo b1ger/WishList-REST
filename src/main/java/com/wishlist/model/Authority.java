@@ -47,12 +47,4 @@ public class Authority implements Serializable {
         result = 31 * result + description.hashCode();
         return result;
     }
-
-    @Override
-    public String toString() {
-        return "Authority{" + "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

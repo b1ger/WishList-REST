@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header-content">
+    <title id="pageTitle">Admin page</title>
+</head>
+<body>
+<div class="w-75 mx-auto">
+    <nav th:replace="fragments/navbar :: admin-navbar-content"></nav>
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">All users</h5>
+                        <p class="card-text">Manage users.<br> Add new, update or delete one.</p>
+                        <a href="#" th:href="@{/admin/user/index}" class="btn btn-primary">Users</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Roles</h5>
+                        <p class="card-text">Manage roles.<br> Attach/detach role for user</p>
+                        <a href="#" th:href="@{/admin/authority/index}" class="btn btn-primary">Roles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

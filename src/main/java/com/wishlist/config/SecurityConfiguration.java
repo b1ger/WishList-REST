@@ -32,6 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .userDetailsService(userDetailsService)
                 .authorizeRequests()
+                .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/index", "/rest/**").permitAll()
                 .antMatchers("/admin/**").permitAll()//.hasRole("ADMIN")
                 .anyRequest().authenticated()
