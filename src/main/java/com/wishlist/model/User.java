@@ -80,11 +80,18 @@ public class User {
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<List> listSet = new HashSet<>();
+
     public boolean isActivated() {
         return activated;
     }
 
     public void addAuthority(Authority authority) {
         this.authorities.add(authority);
+    }
+
+    public void addList(List list) {
+        listSet.add(list);
     }
 }

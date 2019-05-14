@@ -21,6 +21,10 @@ public class List {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(length = 500)
     @NotBlank
     private String name;
@@ -48,4 +52,8 @@ public class List {
 
     @OneToMany(mappedBy = "list")
     private Set<Gift> gifts;
+
+    public void addGift(Gift gift) {
+        gifts.add(gift);
+    }
 }
