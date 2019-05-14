@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Table(name = "gift")
@@ -32,4 +33,11 @@ public class Gift {
     private String description;
 
     private Byte[] picture;
+
+    @OneToMany(mappedBy = "gift")
+    private Set<GiftPicture> giftPictureList;
+
+    @ManyToOne
+    @JoinColumn(name = "list_id")
+    private List list;
 }

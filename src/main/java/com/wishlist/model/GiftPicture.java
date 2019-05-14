@@ -25,4 +25,8 @@ public class GiftPicture {
 
     @Lob
     private Byte[] picture;
+
+    @ManyToOne
+    @JoinColumn(name = "gift_id")
+    private Gift gift;
 }

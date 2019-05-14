@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
+import java.util.Set;
 
 @Entity
 @Table(name="list")
@@ -44,4 +45,7 @@ public class List {
 
     @Lob
     private Byte[] picture;
+
+    @OneToMany(mappedBy = "list")
+    private Set<Gift> gifts;
 }
