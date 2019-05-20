@@ -2,7 +2,7 @@ package com.wishlist.web.ui.controller.admin;
 
 import com.wishlist.model.User;
 import com.wishlist.service.UserService;
-import com.wishlist.web.request.NewUserRequest;
+import com.wishlist.web.request.UserRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,13 +29,13 @@ public class UserController {
 
     @GetMapping("/create")
     public String createAction(Model model) {
-        NewUserRequest userRequest = new NewUserRequest();
+        UserRequest userRequest = new UserRequest();
         model.addAttribute("user", userRequest);
         return "admin/user/create";
     }
 
     @PostMapping("/save")
-    public String saveAction(@Valid @ModelAttribute("user") NewUserRequest userRequest,
+    public String saveAction(@Valid @ModelAttribute("user") UserRequest userRequest,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(objectError -> {

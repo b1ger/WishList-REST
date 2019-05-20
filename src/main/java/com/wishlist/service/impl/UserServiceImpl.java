@@ -10,7 +10,7 @@ import com.wishlist.repository.UserRepository;
 import com.wishlist.service.UserService;
 import com.wishlist.util.PasswordUtils;
 import com.wishlist.util.RandomUtil;
-import com.wishlist.web.request.NewUserRequest;
+import com.wishlist.web.request.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(NewUserRequest request, boolean isActive) {
+    public User createUser(UserRequest request, boolean isActive) {
 
         if (!PasswordUtils.checkPasswordLength(request.getPassword())) {
             throw new InvalidPasswordException();

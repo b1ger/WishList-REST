@@ -6,13 +6,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
-import java.time.Instant;
 
 @NoArgsConstructor
 @Setter
 @Getter
 @ToString
-public class NewListRequest {
+public class ListRequest {
+
+    private Long id;
 
     @NotBlank
     private String name;
@@ -25,23 +26,27 @@ public class NewListRequest {
 
     private String date;
 
+    private String time;
+
     @NotBlank
     private String invitation;
 
-    @NotBlank
     private String address;
 
-    public NewListRequest(@NotBlank String name,
-                          @NotBlank String reason,
-                          @NotBlank String description,
-                          String date,
-                          @NotBlank String invitation,
-                          @NotBlank String address) {
-
+    public ListRequest(
+            @NotBlank String name,
+            @NotBlank String reason,
+            @NotBlank String description,
+            String date,
+            String time,
+            @NotBlank String invitation,
+            String address
+    ) {
         this.name = name;
         this.reason = reason;
         this.description = description;
         this.date = date;
+        this.time = time;
         this.invitation = invitation;
         this.address = address;
     }

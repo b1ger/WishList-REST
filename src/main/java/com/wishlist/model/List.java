@@ -1,9 +1,6 @@
 package com.wishlist.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -22,7 +19,6 @@ public class List {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(length = 500)
@@ -40,11 +36,9 @@ public class List {
     private Instant date;
 
     @Column(length = 4000)
-    @NotBlank
     private String invitation;
 
     @Column(length = 500)
-    @NotBlank
     private String address;
 
     @Lob

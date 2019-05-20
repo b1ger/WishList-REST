@@ -1,10 +1,7 @@
 package com.wishlist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
+@ToString(exclude = {"listSet", "authorities"})
 public class User {
 
     @Id
@@ -78,9 +75,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "authority_name", referencedColumnName = "name")
     )
     @BatchSize(size = 20)
+    @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
     private Set<List> listSet = new HashSet<>();
 
     public boolean isActivated() {

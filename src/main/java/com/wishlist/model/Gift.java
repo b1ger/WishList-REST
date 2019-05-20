@@ -40,4 +40,10 @@ public class Gift {
     @ManyToOne
     @JoinColumn(name = "list_id")
     private List list;
+
+    private boolean booked;
+
+    public boolean isBooked() {
+        return booked;
+    }
 }
