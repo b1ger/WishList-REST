@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
+@ToString(exclude = "user")
 public class List {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

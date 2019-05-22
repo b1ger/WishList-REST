@@ -82,6 +82,9 @@ public class User {
     @JsonIgnore
     private Set<List> listSet = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Gift> bookedGifts = new HashSet<>();
+
     public boolean isActivated() {
         return activated;
     }
@@ -92,5 +95,9 @@ public class User {
 
     public void addList(List list) {
         listSet.add(list);
+    }
+
+    public void bookGift(Gift gift) {
+        bookedGifts.add(gift);
     }
 }

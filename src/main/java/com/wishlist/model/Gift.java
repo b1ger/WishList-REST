@@ -1,5 +1,6 @@
 package com.wishlist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +26,6 @@ public class Gift {
     private String name;
 
     @Column(length = 500)
-    @NotBlank
     private String link;
 
     @Column(length = 5000)
@@ -39,10 +39,17 @@ public class Gift {
 
     @ManyToOne
     @JoinColumn(name = "list_id")
+    @JsonIgnore
     private List list;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
     private boolean booked;
 
+    @JsonIgnore
     public boolean isBooked() {
         return booked;
     }
