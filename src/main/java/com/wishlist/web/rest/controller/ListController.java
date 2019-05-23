@@ -1,7 +1,6 @@
 package com.wishlist.web.rest.controller;
 
 import com.wishlist.model.List;
-import com.wishlist.model.User;
 import com.wishlist.service.ListService;
 import com.wishlist.web.request.ListRequest;
 import com.wishlist.web.rest.BaseResponse;
@@ -45,6 +44,7 @@ public class ListController {
             List saved = listService.save(listRequest, Long.valueOf(userId));
             response.setResults(saved, BaseResponse.OK_STATUS);
         } catch (Exception ex) {
+            log.error(ex.getMessage());
             response.setResults(ex.getMessage(), BaseResponse.ERROR_STATUS);
         }
 
@@ -68,6 +68,7 @@ public class ListController {
                 response.setResults(list, BaseResponse.OK_STATUS);
             }
         } catch (Exception ex) {
+            log.error(ex.getMessage());
             response.setResults(ex.getMessage(), BaseResponse.ERROR_STATUS);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -91,6 +92,7 @@ public class ListController {
             List saved = listService.update(listRequest);
             response.setResults(saved, BaseResponse.OK_STATUS);
         } catch (Exception ex) {
+            log.error(ex.getMessage());
             response.setResults(ex.getMessage(), BaseResponse.ERROR_STATUS);
         }
 

@@ -4,8 +4,8 @@ import com.wishlist.exception.NotFoundException;
 import com.wishlist.model.List;
 import com.wishlist.model.User;
 import com.wishlist.repository.ListRepository;
-import com.wishlist.repository.UserRepository;
 import com.wishlist.service.ListService;
+import com.wishlist.service.UserService;
 import com.wishlist.web.request.ListRequest;
 import com.wishlist.web.request.converter.ListConverter;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +19,13 @@ import java.util.Objects;
 public class ListServiceImpl implements ListService {
 
     private ListRepository listRepository;
-    private UserRepository userRepository;
+    private UserService userService;
     private ListConverter listConverter;
 
     @Autowired
-    public ListServiceImpl(ListRepository listRepository, UserRepository userRepository, ListConverter listConverter) {
+    public ListServiceImpl(ListRepository listRepository, UserService userService, ListConverter listConverter) {
         this.listRepository = listRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.listConverter = listConverter;
     }
 
@@ -36,12 +36,12 @@ public class ListServiceImpl implements ListService {
             throw new RuntimeException("Object NewListRequest can not be null.");
         }
 
-        User user = findUser(userId);
+        User user = userService.findById(userId);
         List list = listConverter.convert(listRequest);
 
         List savedList = listRepository.save(list);
         user.addList(savedList);
-        userRepository.save(user);
+        userService.updateUser(user);
 
         return savedList;
     }
@@ -49,8 +49,7 @@ public class ListServiceImpl implements ListService {
     @Override
     public List update(ListRequest listRequest) throws Exception {
         List list = listConverter.convert(listRequest);
-        List detached = listRepository.findById(Objects.requireNonNull(list).getId())
-                .orElseThrow(() -> new NotFoundException(String.format("List with id:$n, does not exist.", list.getId())));
+        List detached = findById(Objects.requireNonNull(list).getId());
         list.setUser(detached.getUser());
         list.setGifts(detached.getGifts());
         List saved = listRepository.save(list);
@@ -60,8 +59,7 @@ public class ListServiceImpl implements ListService {
 
     @Override
     public void delete(Long listId) throws NotFoundException {
-        List deleted = listRepository.findById(listId)
-                .orElseThrow(() -> new NotFoundException(String.format("List with id:$n, does not exist.", listId)));
+        List deleted = findById(listId);
         listRepository.delete(deleted);
     }
 
@@ -73,19 +71,14 @@ public class ListServiceImpl implements ListService {
 
     @Override
     public List findOneByIdAndUserId(Long listId, Long userId) throws NotFoundException {
-        User user = findUser(userId);
+        User user = userService.findById(userId);
         return listRepository.findByIdAndUser(listId, user)
                 .orElseThrow(() -> new NotFoundException(String.format("List with id:$n, does not exist for user with id:$n", listId, userId)));
     }
 
     @Override
     public java.util.List<List> findAllByUserId(Long userId) {
-        User user = findUser(userId);
+        User user = userService.findById(userId);
         return listRepository.findAllByUser(user);
-    }
-
-    private User findUser(Long userId) {
-        return userRepository.findOneById(userId)
-                .orElseThrow(() -> new NotFoundException(String.format("User with id:$n, does not exist.", userId)));
     }
 }

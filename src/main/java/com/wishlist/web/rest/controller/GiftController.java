@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,12 +23,11 @@ public class GiftController {
         this.giftService = giftService;
     }
 
-    @PostMapping(value = "/rest/{userId}/list/{listId}/gift",
+    @PostMapping(value = "/rest/list/{listId}/gift",
             consumes = "application/json",
             produces = "application/json")
     public ResponseEntity<BaseResponse> saveGift(
             @Valid @RequestBody Gift gift,
-            @PathVariable String userId,
             @PathVariable String listId,
             BindingResult bindingResult
     ) {
@@ -47,8 +43,46 @@ public class GiftController {
             Gift saved = giftService.save(gift, Long.valueOf(listId));
             response.setResults(saved, BaseResponse.OK_STATUS);
         } catch (Exception ex) {
+            log.error(ex.getMessage());
             response.setResults(ex.getMessage(), BaseResponse.ERROR_STATUS);
         }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/rest/gift/update",
+            consumes = "application/json",
+            produces = "application/json")
+    public ResponseEntity<BaseResponse> updateGift(
+            @Valid @RequestBody Gift gift,
+            BindingResult bindingResult
+    ) {
+        BaseResponse response = new BaseResponse();
+
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(objectError -> {
+                log.error(objectError.toString());
+            });
+            response.setResults(bindingResult.getAllErrors(), BaseResponse.ERROR_STATUS);
+        }
+        try {
+            Gift saved = giftService.update(gift);
+            response.setResults(saved, BaseResponse.OK_STATUS);
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            response.setResults(ex.getMessage(), BaseResponse.ERROR_STATUS);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/rest/gift/{giftId}",
+            consumes = "application/json",
+            produces = "application/json")
+    public ResponseEntity<BaseResponse> deleteGift(@PathVariable String giftId) {
+        BaseResponse response = new BaseResponse();
+        giftService.delete(giftService.findById(Long.valueOf(giftId)));
+        response.setResults("Gift was deleted.", BaseResponse.OK_STATUS);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

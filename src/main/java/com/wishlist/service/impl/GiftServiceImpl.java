@@ -2,11 +2,9 @@ package com.wishlist.service.impl;
 
 import com.wishlist.exception.NotFoundException;
 import com.wishlist.model.Gift;
-import com.wishlist.model.User;
 import com.wishlist.repository.GiftRepository;
 import com.wishlist.service.GiftService;
 import com.wishlist.service.ListService;
-import com.wishlist.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +36,11 @@ public class GiftServiceImpl implements GiftService {
 
     @Override
     public Gift update(Gift gift) {
-        return null;
+        Gift detached = findById(gift.getId());
+        detached.setName(gift.getName());
+        detached.setDescription(gift.getDescription());
+        detached.setLink(gift.getLink());
+        return giftRepository.save(detached);
     }
 
     @Override
