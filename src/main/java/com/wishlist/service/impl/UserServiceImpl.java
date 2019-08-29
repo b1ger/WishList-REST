@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(UserRequest request, boolean isActive) {
+    public User createUser(UserRequest request, boolean isActive) throws EmailAlreadyUsedException {
 
         if (!PasswordUtils.checkPasswordLength(request.getPassword())) {
             throw new InvalidPasswordException();

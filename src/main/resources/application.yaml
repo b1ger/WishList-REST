@@ -1,0 +1,15 @@
+spring:
+
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;DatabaseName=wishlist
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: Password123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.SQLServer2012Dialect
+
+security:
+  session: NEVER

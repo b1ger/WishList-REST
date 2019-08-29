@@ -14,6 +14,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
+@RequestMapping(value = "/apiwl")
 public class GiftController {
 
     private GiftService giftService;
@@ -23,7 +24,7 @@ public class GiftController {
         this.giftService = giftService;
     }
 
-    @PostMapping(value = "/rest/list/{listId}/gift",
+    @PostMapping(value = "/list/{listId}/gift",
             consumes = "application/json",
             produces = "application/json")
     public ResponseEntity<BaseResponse> saveGift(
@@ -50,7 +51,7 @@ public class GiftController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/rest/gift/update",
+    @PostMapping(value = "/gift/update",
             consumes = "application/json",
             produces = "application/json")
     public ResponseEntity<BaseResponse> updateGift(
@@ -76,7 +77,7 @@ public class GiftController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/rest/gift/{giftId}",
+    @DeleteMapping(value = "/gift/{giftId}",
             consumes = "application/json",
             produces = "application/json")
     public ResponseEntity<BaseResponse> deleteGift(@PathVariable String giftId) {

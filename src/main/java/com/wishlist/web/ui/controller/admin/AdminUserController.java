@@ -18,12 +18,12 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequestMapping("/admin/user")
-public class UserController {
+public class AdminUserController {
 
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public AdminUserController(UserService userService) {
         this.userService = userService;
     }
 
