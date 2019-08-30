@@ -11,5 +11,21 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.SQLServer2012Dialect
 
+  mail:
+    host: smtp.gmail.com
+    username: b.gerashchencko@gmail.com
+    password: huj153153
+    port: 587
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+
 security:
   session: NEVER
+
+-Demail:
+  activation-base-url: http:\\localhost:8080
