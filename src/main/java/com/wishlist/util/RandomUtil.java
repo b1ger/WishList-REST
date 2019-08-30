@@ -23,6 +23,6 @@ public class RandomUtil {
     }
 
     public static String generateActivationKey() {
-        return RandomStringUtils.randomNumeric(RandomUtil.ACTIVATION_KEY_COUNT);
+        return RandomStringUtils.randomAlphanumeric(RandomUtil.ACTIVATION_KEY_COUNT);
     }
 }

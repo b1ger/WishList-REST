@@ -20,8 +20,7 @@ import java.security.Principal;
 
 @RestController
 @Slf4j
-@CrossOrigin
-@RequestMapping(value = "/apiwl")
+@RequestMapping(value = "/apiwl/user")
 public class UserController {
 
     private UserService userService;
@@ -33,7 +32,7 @@ public class UserController {
         this.emailService = emailService;
     }
 
-    @PostMapping(value = "/user/register")
+    @PostMapping(value = "/register")
     public ResponseEntity<BaseResponse> register(@Valid @RequestBody UserRequest userRequest,
                                                  BindingResult bindingResult) {
         BaseResponse response = new BaseResponse();
@@ -46,6 +45,7 @@ public class UserController {
             try {
                 User user = userService.createUser(userRequest, false);
                 response.setResults(user, BaseResponse.OK_STATUS);
+                emailService.sendActivationEmail(user);
             } catch (EmailAlreadyUsedException ex) {
                 Error errors = new Error();
                 errors.addError("email", "This email already used.");
@@ -56,7 +56,7 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/user/login")
+    @PostMapping(value = "/login")
     public ResponseEntity<BaseResponse> login(Principal user) {
         return new ResponseEntity<>(new BaseResponse(user, BaseResponse.OK_STATUS), HttpStatus.OK);
     }
@@ -76,5 +76,17 @@ public class UserController {
         }
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/activate/{userId}/{activationKey}")
+    public void activate(
+            @PathVariable("userId") String userId,
+            @PathVariable("activationKey") String activationKey
+    ) {
+        User user = userService.findById(Long.valueOf(userId));
+        if (user.getActivationKey().equals(activationKey)) {
+            user.setActivated(true);
+            userService.updateUser(user);
+        }
     }
 }
