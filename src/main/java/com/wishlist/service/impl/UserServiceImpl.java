@@ -41,6 +41,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByEmail(String email) throws NotFoundException {
+        return userRepository.findOneByEmailIgnoreCase(email).orElseThrow(
+                () -> new NotFoundException(String.format("User with email: $s, does not exist", email))
+        );
+    }
+
+    @Override
     public User createUser(UserRequest request, boolean isActive) throws EmailAlreadyUsedException {
 
         if (!PasswordUtils.checkPasswordLength(request.getPassword())) {
