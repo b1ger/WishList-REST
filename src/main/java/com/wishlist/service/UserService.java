@@ -8,6 +8,7 @@ import com.wishlist.web.request.UserRequest;
 public interface UserService {
 
     User findById(Long id) throws NotFoundException;
+    User findByEmail(String email) throws NotFoundException;
     User createUser(UserRequest request, boolean isActive) throws EmailAlreadyUsedException;
     User updateUser(User user);
 }

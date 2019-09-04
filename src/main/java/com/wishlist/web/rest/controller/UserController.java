@@ -1,10 +1,12 @@
 package com.wishlist.web.rest.controller;
 
 import com.wishlist.exception.EmailAlreadyUsedException;
+import com.wishlist.exception.NotFoundException;
 import com.wishlist.model.Subscribition;
 import com.wishlist.model.User;
 import com.wishlist.service.EmailService;
 import com.wishlist.service.UserService;
+import com.wishlist.web.request.LoginRequest;
 import com.wishlist.web.request.UserRequest;
 import com.wishlist.web.rest.BaseResponse;
 import com.wishlist.web.rest.Error;
@@ -12,11 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.Principal;
 
 @RestController
 @Slf4j
@@ -25,11 +27,13 @@ public class UserController {
 
     private UserService userService;
     private EmailService emailService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService, EmailService emailService) {
+    public UserController(UserService userService, EmailService emailService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.emailService = emailService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping(value = "/register")
@@ -57,8 +61,27 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<BaseResponse> login(Principal user) {
-        return new ResponseEntity<>(new BaseResponse(user, BaseResponse.OK_STATUS), HttpStatus.OK);
+    public ResponseEntity<BaseResponse> login(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
+        BaseResponse response = new BaseResponse();
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(error -> {
+                log.error(error.toString());
+            });
+            setAuthError(response);
+        } else {
+            try {
+                User user = userService.findByEmail(loginRequest.getEmail());
+                if (this.passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+                    response.setResults(user, BaseResponse.OK_STATUS);
+                } else {
+                    setAuthError(response);
+                }
+            } catch (NotFoundException ex) {
+                setAuthError(response);
+            }
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping(value = "/subscribe")
@@ -88,5 +111,11 @@ public class UserController {
             user.setActivated(true);
             userService.updateUser(user);
         }
+    }
+
+    private void setAuthError(BaseResponse response) {
+        Error error = new Error();
+        error.addError("auth", "Authentication error.");
+        response.setResults(new Error(), BaseResponse.ERROR_STATUS);
     }
 }
