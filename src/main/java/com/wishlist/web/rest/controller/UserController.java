@@ -71,8 +71,9 @@ public class UserController {
         } else {
             try {
                 User user = userService.findByEmail(loginRequest.getEmail());
-                response.setResults(user, BaseResponse.OK_STATUS);
-                if (!user.getPassword().equals(this.passwordEncoder.encode(loginRequest.getPassword()))) {
+                if (this.passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+                    response.setResults(user, BaseResponse.OK_STATUS);
+                } else {
                     setAuthError(response);
                 }
             } catch (NotFoundException ex) {
