@@ -24,8 +24,10 @@ spring:
             required: true
           auth: true
 
-security:
-  session: NEVER
+  security:
+    oauth2:
+      resource:
+        filter-order: 3
 
 -Demail:
   activation-base-url: http:\\localhost:8080
