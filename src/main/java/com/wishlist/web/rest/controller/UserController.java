@@ -8,7 +8,7 @@ import com.wishlist.service.EmailService;
 import com.wishlist.service.UserService;
 import com.wishlist.web.request.LoginRequest;
 import com.wishlist.web.request.UserRequest;
-import com.wishlist.web.rest.BaseResponse;
+import com.wishlist.web.response.BaseResponse;
 import com.wishlist.web.rest.Error;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

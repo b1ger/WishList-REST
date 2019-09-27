@@ -3,7 +3,7 @@ package com.wishlist.web.rest.controller;
 import com.wishlist.model.List;
 import com.wishlist.service.ListService;
 import com.wishlist.web.request.ListRequest;
-import com.wishlist.web.rest.BaseResponse;
+import com.wishlist.web.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

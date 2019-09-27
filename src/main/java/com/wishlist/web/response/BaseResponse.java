@@ -1,4 +1,4 @@
-package com.wishlist.web.rest;
+package com.wishlist.web.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

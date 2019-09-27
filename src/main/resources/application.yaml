@@ -24,10 +24,8 @@ spring:
             required: true
           auth: true
 
-  security:
-    oauth2:
-      resource:
-        filter-order: 3
+jwt:
+  secret: "ijwen283782hvio23"
 
 -Demail:
   activation-base-url: http:\\localhost:8080
