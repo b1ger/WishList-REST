@@ -2,7 +2,7 @@ package com.wishlist.web.rest.controller;
 
 import com.wishlist.model.Gift;
 import com.wishlist.service.GiftService;
-import com.wishlist.web.rest.BaseResponse;
+import com.wishlist.web.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
