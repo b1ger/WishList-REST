@@ -1,6 +1,5 @@
 package com.wishlist.web.rest.controller;
 
-import com.wishlist.service.security.DomainUserDetailService;
 import com.wishlist.util.JwtTokenUtil;
 import com.wishlist.web.request.JwtRequest;
 import com.wishlist.web.response.JwtResponse;
@@ -10,9 +9,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.InvocationTargetException;
 
 @RestController
 @CrossOrigin
@@ -34,11 +36,16 @@ public class JwtAuthController {
     }
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest jwtRequest) throws Exception {
-        authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest jwtRequest) {
+
+        try{
+            authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
+        } catch (Exception ignored) {
+            return ResponseEntity.ok(new JwtResponse(null, "ERROR"));
+        }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(new JwtResponse(token, "OK"));
     }
 
     private void authenticate(String username, String password) throws Exception {

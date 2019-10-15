@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin
 @RestController
 @Slf4j
 @RequestMapping(value = "/apiwl/user")
@@ -60,8 +61,8 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/login")
-    public ResponseEntity<BaseResponse> login(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
+    @PostMapping(value = "/get")
+    public ResponseEntity<BaseResponse> getUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
         BaseResponse response = new BaseResponse();
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> {
