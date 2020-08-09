@@ -1,20 +1,20 @@
 spring:
 
   datasource:
-    url: jdbc:sqlserver://localhost:1433;DatabaseName=wishlist
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    username: sa
-    password: Password123
+    url: jdbc:postgresql://127.0.0.1:5432/wishlist
+    driver-class-name: org.postgresql.Driver
+    username: wishlist_admin
+    password: Cloud_123
 
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.SQLServer2012Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   mail:
     host: smtp.gmail.com
-    username: b.gerashchencko@gmail.com
-    password: huj153153
+    username:
+    password:
     port: 587
     properties:
       mail:
@@ -25,7 +25,7 @@ spring:
           auth: true
 
 jwt:
-  secret: "ijwen283782hvio23"
+  secret:
 
 -Demail:
   activation-base-url: http:\\localhost:8080

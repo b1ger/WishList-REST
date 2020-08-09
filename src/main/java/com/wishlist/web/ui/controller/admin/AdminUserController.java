@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @RequestMapping("/admin/user")
 public class AdminUserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public AdminUserController(UserService userService) {

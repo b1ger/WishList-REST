@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class AuthorityServiceImpl implements AuthorityService {
 
-    private AuthorityRepository authorityRepository;
+    private final AuthorityRepository authorityRepository;
 
     @Autowired
     public AuthorityServiceImpl(AuthorityRepository authorityRepository) {

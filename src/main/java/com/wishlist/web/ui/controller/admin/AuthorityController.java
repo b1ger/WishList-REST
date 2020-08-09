@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/admin/authority")
 public class AuthorityController {
 
-    private AuthorityService authorityService;
+    private final AuthorityService authorityService;
 
     @Autowired
     public AuthorityController(AuthorityService authorityService) {

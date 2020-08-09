@@ -18,9 +18,9 @@ import java.util.Objects;
 @Service
 public class ListServiceImpl implements ListService {
 
-    private ListRepository listRepository;
-    private UserService userService;
-    private ListConverter listConverter;
+    private final ListRepository listRepository;
+    private final UserService userService;
+    private final ListConverter listConverter;
 
     @Autowired
     public ListServiceImpl(ListRepository listRepository, UserService userService, ListConverter listConverter) {

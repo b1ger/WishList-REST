@@ -20,9 +20,9 @@ import java.lang.reflect.InvocationTargetException;
 @CrossOrigin
 public class JwtAuthController {
 
-    private AuthenticationManager authenticationManager;
-    private JwtTokenUtil jwtTokenUtil;
-    private UserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
     public JwtAuthController(

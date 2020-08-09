@@ -16,8 +16,8 @@ import java.util.Optional;
 @Service
 public class GiftServiceImpl implements GiftService {
 
-    private GiftRepository giftRepository;
-    private ListService listService;
+    private final GiftRepository giftRepository;
+    private final ListService listService;
 
     @Autowired
     public GiftServiceImpl(GiftRepository giftRepository, ListService listService) {

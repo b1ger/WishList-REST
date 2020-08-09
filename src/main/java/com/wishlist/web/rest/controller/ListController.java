@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @RestController
 public class ListController {
 
-    private ListService listService;
+    private final ListService listService;
 
     @Autowired
     public ListController(ListService listService) {

@@ -24,7 +24,7 @@ public class DomainUserDetailService implements UserDetailsService {
 
     private final Logger logger = LoggerFactory.getLogger(DomainUserDetailService.class);
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public DomainUserDetailService(UserRepository userRepository) {

@@ -13,44 +13,40 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-@Table(name = "authority")
+@Table(name = "sys_config_item")
 @NoArgsConstructor
 @Setter
 @Getter
 @ToString
-public class Authority implements Serializable {
+public class ConfigItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50)
+    @Column
     @NotBlank
-    private String name;
+    private String configKey;
 
-    @Column(length = 255)
+    @Column
     @NotBlank
-    private String description;
+    private String configValue;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Authority authority = (Authority) o;
-
-        if (!id.equals(authority.id)) return false;
-        if (!name.equals(authority.name)) return false;
-        return description.equals(authority.description);
+        ConfigItem that = (ConfigItem) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(configKey, that.configKey) &&
+                Objects.equals(configValue, that.configValue);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + description.hashCode();
-        return result;
+        return Objects.hash(id, configKey, configValue);
     }
 }

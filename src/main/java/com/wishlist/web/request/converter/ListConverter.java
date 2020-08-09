@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ListConverter implements Converter<ListRequest, List> {
 
-    private DateUtils dateUtils;
+    private final DateUtils dateUtils;
 
     @Autowired
     public ListConverter(DateUtils dateUtils) {
@@ -23,9 +23,6 @@ public class ListConverter implements Converter<ListRequest, List> {
     @Nullable
     @Override
     public List convert(ListRequest source) {
-        if (source == null) {
-            return null;
-        }
         final List list = new List();
         if (source.getId() != null) {
             list.setId(source.getId());

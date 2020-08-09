@@ -26,9 +26,9 @@ import javax.validation.Valid;
 @RequestMapping(value = "/apiwl/user")
 public class UserController {
 
-    private UserService userService;
-    private EmailService emailService;
-    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserController(UserService userService, EmailService emailService, PasswordEncoder passwordEncoder) {
@@ -50,7 +50,7 @@ public class UserController {
             try {
                 User user = userService.createUser(userRequest, false);
                 response.setResults(user, BaseResponse.OK_STATUS);
-                emailService.sendActivationEmail(user);
+//                emailService.sendActivationEmail(user);
             } catch (EmailAlreadyUsedException ex) {
                 Error errors = new Error();
                 errors.addError("email", "This email already used.");

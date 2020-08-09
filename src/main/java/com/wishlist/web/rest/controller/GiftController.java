@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/apiwl")
 public class GiftController {
 
-    private GiftService giftService;
+    private final GiftService giftService;
 
     @Autowired
     public GiftController(GiftService giftService) {

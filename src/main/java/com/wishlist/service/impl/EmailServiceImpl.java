@@ -26,7 +26,7 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
 
-    private SubscribitionRepository subscribitionRepository;
+    private final SubscribitionRepository subscribitionRepository;
 
     @Value("b.gerashchencko@gmail.com")
     private String emailFrom;

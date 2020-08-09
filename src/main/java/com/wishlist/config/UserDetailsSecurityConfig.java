@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @Configuration
 public class UserDetailsSecurityConfig {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserDetailsSecurityConfig(UserRepository userRepository) {
