@@ -10,10 +10,14 @@ import com.wishlist.repository.UserRepository;
 import com.wishlist.service.UserService;
 import com.wishlist.util.PasswordUtils;
 import com.wishlist.util.RandomUtil;
+import com.wishlist.web.request.SocialUserRequest;
 import com.wishlist.web.request.UserRequest;
+import com.wishlist.web.request.converter.UserConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,16 +25,19 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserConverter userConverter;
 
     @Autowired
     public UserServiceImpl(
             UserRepository userRepository,
             AuthorityRepository authorityRepository,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            UserConverter userConverter
     ) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userConverter = userConverter;
     }
 
     @Override
@@ -76,6 +83,12 @@ public class UserServiceImpl implements UserService {
         }
 
         return this.userRepository.save(user);
+    }
+
+    @Override
+    public User createSocialUser(SocialUserRequest socialUser) {
+        final User detachedUser = userConverter.convert(socialUser);
+        return this.userRepository.save(Objects.requireNonNull(detachedUser));
     }
 
     @Override

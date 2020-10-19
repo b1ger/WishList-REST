@@ -80,8 +80,7 @@ public class User {
     private String nickName;
 
     @Column(name = "picture")
-    @Lob
-    private Byte[] picture;
+    private String photoUrl;
 
     @ManyToMany
     @JoinTable(name = "users_authority",
