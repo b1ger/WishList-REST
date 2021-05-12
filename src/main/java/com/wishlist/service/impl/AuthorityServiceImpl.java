@@ -27,7 +27,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Override
     public Authority getAuthorityByName(String name) {
         return authorityRepository.findByName(name)
-                .orElseThrow(() -> new NotFoundException(String.format("Authority with name \"$s\" does not exist", name)));
+                .orElseThrow(() -> new NotFoundException(String.format("Authority with name \"%s\" does not exist", name)));
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.wishlist.config;
 
+import com.wishlist.social.CustomOAuth2Service;
+import com.wishlist.social.CustomOAuth2User;
 import com.wishlist.util.JwtAuthenticationEntryPoint;
 import com.wishlist.util.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +24,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
-
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtRequestFilter jwtRequestFilter;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    public SecurityConfiguration(UserDetailsService userDetailsService, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtRequestFilter jwtRequestFilter) {
-        this.userDetailsService = userDetailsService;
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.jwtRequestFilter = jwtRequestFilter;
-    }
+    private CustomOAuth2Service customOAuth2Service;
+
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -57,8 +59,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors().disable()
                 .authorizeRequests()
                 .antMatchers("/apiwl/user/**").permitAll()
-                .antMatchers("/authenticate", "/signin/social").permitAll()
+                .antMatchers("/", "/index").permitAll()
+                .antMatchers("/login", "/login-form", "/logout", "/signin-form", "/register", "/webjars/**").permitAll()
                 .anyRequest().authenticated()
+                .and()
+                .oauth2Login()
+                .loginPage("/login-form")
+                .userInfoEndpoint()
+                .userService(customOAuth2Service)
+                .and().successHandler((httpServletRequest, httpServletResponse, authentication) -> {
+                        CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
+
+                        // TODO make request to UI with JWT token
+
+                        httpServletResponse.sendRedirect("/index");
+                    })
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()

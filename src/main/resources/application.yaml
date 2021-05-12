@@ -24,8 +24,26 @@ spring:
             required: true
           auth: true
 
+  security:
+   oauth2:
+     client:
+       registration:
+         facebook:
+           clientId: 590300855088731
+           clientSecret: '0fbb363c77ee723252e780e2831e17cf'
+           scope:
+             - email
+             - public_profile
+
+
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+
 jwt:
-  secret:
+  secret: secret
 
 -Demail:
   activation-base-url: http:\\localhost:8080

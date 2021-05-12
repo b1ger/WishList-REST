@@ -2,10 +2,10 @@ package com.wishlist.web.rest.controller;
 
 import com.wishlist.model.User;
 import com.wishlist.service.UserService;
+import com.wishlist.social.CustomOAuth2User;
 import com.wishlist.util.JwtTokenUtil;
 import com.wishlist.util.PasswordUtils;
 import com.wishlist.web.request.JwtRequest;
-import com.wishlist.web.request.SocialUserRequest;
 import com.wishlist.web.response.BaseResponse;
 import com.wishlist.web.response.JwtResponse;
 import org.slf4j.Logger;
@@ -66,7 +66,7 @@ public class JwtAuthController {
     }
 
     @RequestMapping(value = "/signin/social", method = RequestMethod.POST)
-    public ResponseEntity<BaseResponse> signInSocial(@RequestBody SocialUserRequest socialUser) {
+    public ResponseEntity<BaseResponse> signInSocial(@RequestBody CustomOAuth2User socialUser) {
         BaseResponse response = new BaseResponse();
         Map<String, Object> results = new HashMap<>();
 
@@ -87,7 +87,7 @@ public class JwtAuthController {
 
             logger.debug(ex.getMessage());
 
-            final User user = userService.createSocialUser(socialUser);
+            final User user = new User();
             final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
             final String jwtToken = jwtTokenUtil.generateToken(userDetails);
 

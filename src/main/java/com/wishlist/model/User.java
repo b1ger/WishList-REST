@@ -1,6 +1,7 @@
 package com.wishlist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wishlist.social.Provider;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -97,6 +100,9 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Gift> bookedGifts = new HashSet<>();
+
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
     public boolean isActivated() {
         return activated;

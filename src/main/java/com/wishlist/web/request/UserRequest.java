@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -18,14 +19,12 @@ public class UserRequest {
     public static final int MIN_PASSWORD_LENGTH = 6;
     public static final int MAX_PASSWORD_LENGTH = 15;
 
-    private Long id;
     @NotBlank private String firstName;
     @NotBlank private String lastName;
     @NotBlank @Email private String email;
     @NotBlank @Size(min = MIN_PASSWORD_LENGTH, max = MAX_PASSWORD_LENGTH) private String password;
 
-    public UserRequest(Long id,
-                       @NotBlank String firstName,
+    public UserRequest(@NotBlank String firstName,
                        @NotBlank String lastName,
                        @NotBlank @Email String email,
                        @NotBlank @Size(

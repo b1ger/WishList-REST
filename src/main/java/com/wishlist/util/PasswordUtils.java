@@ -1,11 +1,10 @@
 package com.wishlist.util;
 
-import com.wishlist.web.request.SocialUserRequest;
+import com.wishlist.social.CustomOAuth2User;
 import com.wishlist.web.request.UserRequest;
 import lombok.NoArgsConstructor;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.Arrays;
 import java.util.Base64;
 
 @NoArgsConstructor
@@ -17,7 +16,7 @@ public class PasswordUtils {
                 password.length() <= UserRequest.MAX_PASSWORD_LENGTH;
     }
 
-    public static String shakePasswordFromSocial(SocialUserRequest socialUser) {
+    public static String shakePasswordFromSocial(CustomOAuth2User socialUser) {
         return Base64.getEncoder().encodeToString((socialUser.getEmail() + ":" + socialUser.getId()).getBytes());
     }
 }

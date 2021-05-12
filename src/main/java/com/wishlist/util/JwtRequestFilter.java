@@ -3,6 +3,7 @@ package com.wishlist.util;
 import com.wishlist.service.security.DomainUserDetailService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +24,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public JwtRequestFilter(DomainUserDetailService userDetailService, JwtTokenUtil jwtTokenUtil) {
+    public JwtRequestFilter(@Qualifier("domainUserDetailService") DomainUserDetailService userDetailService, JwtTokenUtil jwtTokenUtil) {
         this.userDetailService = userDetailService;
         this.jwtTokenUtil = jwtTokenUtil;
     }

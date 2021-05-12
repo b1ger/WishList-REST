@@ -8,9 +8,10 @@ import com.wishlist.model.User;
 import com.wishlist.repository.AuthorityRepository;
 import com.wishlist.repository.UserRepository;
 import com.wishlist.service.UserService;
+import com.wishlist.social.CustomOAuth2User;
+import com.wishlist.social.Provider;
 import com.wishlist.util.PasswordUtils;
 import com.wishlist.util.RandomUtil;
-import com.wishlist.web.request.SocialUserRequest;
 import com.wishlist.web.request.UserRequest;
 import com.wishlist.web.request.converter.UserConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,14 +45,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) throws NotFoundException {
         return userRepository.findById(id).orElseThrow(
-                () -> new NotFoundException(String.format("User with id:$n, does not exist", id))
+                () -> new NotFoundException(String.format("User with id:%s, does not exist", id))
         );
     }
 
     @Override
     public User findByEmail(String email) throws NotFoundException {
         return userRepository.findOneByEmailIgnoreCase(email).orElseThrow(
-                () -> new NotFoundException(String.format("User with email: $s, does not exist", email))
+                () -> new NotFoundException(String.format("User with email: %s, does not exist", email))
         );
     }
 
@@ -70,6 +72,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(request.getEmail());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
+        user.setProvider(Provider.LOCAL);
 
         String encryptedPassword = this.passwordEncoder.encode(request.getPassword());
         user.setPassword(encryptedPassword);
@@ -86,7 +89,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createSocialUser(SocialUserRequest socialUser) {
+    public User createSocialUser(CustomOAuth2User socialUser) {
         final User detachedUser = userConverter.convert(socialUser);
         return this.userRepository.save(Objects.requireNonNull(detachedUser));
     }
